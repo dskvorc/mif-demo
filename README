@@ -68,8 +68,8 @@ To run the demo, we need the following projects from Github:
   * https://github.com/dskvorc/mif-demo (demo configuration scripts)
 
 IMPORTANT:
-Put all the projects within the same root directory because configuration
-scripts use relative paths. For example:
+Put all the projects in the same root directory because configuration scripts
+use relative paths. For example:
   * <DEMO_ROOT_DIR>/mif-radvd
   * <DEMO_ROOT_DIR>/mif-pvdman
   * <DEMO_ROOT_DIR>/mif-demo
