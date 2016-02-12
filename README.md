@@ -1,5 +1,3 @@
-# Demo for MIF WG Multiple Provisioning Domain (PvD) project
-
 In this demo, we simulate network configuration shown in Figure 1. For the
 pupose of the demo, we need three host (or virtual) machines:
   - machine 1: provider of PvD 1 (router + dns server + web server)
