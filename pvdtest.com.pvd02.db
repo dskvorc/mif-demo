@@ -1,0 +1,19 @@
+$ORIGIN pvdtest.com.
+
+$TTL 86400 ; Time To Live before remote DNS server removes stale records from cache
+
+@ IN SOA ns1.pvdtest.com. info.pvdtest.com. ( ; Responsible name server and responsible email address without the "@" symbol.
+  1123161063 ; serial number
+  10800 ; refresh (3 hours)
+  3600 ; retry (1 hour)
+  604800 ; expire (1 week)
+  3600 ; minimum (1 hour)
+)
+
+pvdtest.com. IN NS ns1.pvdtest.com.
+
+pvdtest.com. IN MX 10 mail.pvdtest.com.
+
+      IN AAAA   2001:db8:2222:2222::1
+ns1   IN AAAA   2001:db8:2222:2222::1
+www   IN CNAME  pvdtest.com.
