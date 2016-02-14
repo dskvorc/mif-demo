@@ -1,3 +1,10 @@
+Contents
+1. What we want to demonstrate
+2. How to run a demo
+
+
+1. What we want to demonstrate
+
 In this demo, we simulate network configuration shown in Figure 1. For the
 pupose of the demo, we need three host (or virtual) machines:
   - machine 1: provider of PvD 1 (router + dns server + web server)
@@ -52,6 +59,9 @@ server 1, while another belonging to web server 2. This simulates the situation
 where an application server on provider's private network is accessible only
 from provider's network.
 
+
+2. How to run a demo
+
 Router 1 uses the following network parameters while sending RAs:
 Network prefix: 2001:db8:1111:1111::/64
 Router IP:      2001:db8:1111:1111::1
@@ -86,7 +96,7 @@ On machine 2 (router 2 + DNS server 2 + web server 2), run the following:
   $ sudo ./configure.pvd02.sh
   
 At this point, machine 1 and machine 2 should have their IP addresses
-configured, and following services should be started:
+configured, and following services should have been started:
   named (regular DNS server)
   httpd (regular web server)
   radvd (PvD-aware version of radvd)
@@ -103,21 +113,21 @@ To check the namespaces created to host PvDs, run the following on machine 3
 (client):
   $ sudo ip netns list
 You should see something like:
-  mifpvd-4
   mifpvd-3
   mifpvd-2
   mifpvd-1
   mifpvd-default
 You may have other namespaces listed too if your system is using them, but for
 the purpose of the PvD configuration, only those prefixed with mifpvd-* are
-relevant. Namespace mifpvd-default is default network namespace, while others
-namespaces are created to host two implicit and two explicit PvDs. You can look
+relevant. Namespace mifpvd-default is default network namespace, while other
+namespaces are created to host one implicit and two explicit PvDs. You can look
 at the stderr log of the mif-pvdman to check which namespace is associated with
-particular PvD.
+particular PvD. Log lines that ends with "type EXPLICIT" describe where explicit
+provisioning domains PvD 1 and Pvd 2 from Figure 1 are configured.
 
-Let's assume that PvD 1 is configured in mifpvd-2, while PvD 2 is configured in
-mifpvd-4. To test the client's connectivity, run the following on machine 3
-(client):
+Let's assume that PvD 1 is configured in namespace mifpvd-2, while PvD 2 is
+configured in namespace mifpvd-3. To test the client's connectivity, run the
+following on machine 3 (client):
   $ firefox
   type pvdtest.com into the web browser's address bar
   (you should get Server not found error because default network namespace is
@@ -127,6 +137,6 @@ mifpvd-4. To test the client's connectivity, run the following on machine 3
   type pvdtest.com into the web browser's address bar
   (you should get a web page from web server 1)
 
-  $ sudo ip netns exec mifpvd-4 firefox
+  $ sudo ip netns exec mifpvd-3 firefox
   type pvdtest.com into the web browser's address bar
   (you should get a web page from web server 2)
